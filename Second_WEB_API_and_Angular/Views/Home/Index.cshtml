@@ -20,8 +20,8 @@
             $scope.IsVisible = false;
 
             $scope.Search = function () {
-
-                var customer = '{Name: "' + $scope.Prefix + '" }';
+            
+                var customer = {"Name": $scope.Prefix };
 
                 var post = $http({      //Data sent to the AjaxMethod action method.
                     method: "POST",

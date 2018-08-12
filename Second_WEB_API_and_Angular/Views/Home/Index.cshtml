@@ -6,44 +6,47 @@
 <!DOCTYPE html>
 
 <html>
-    <head>
-        <meta name="viewport" content="width=device-width" />
-        <title>Index</title>
-    </head>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.9/angular.min.js"></script>
+    <script type="text/javascript">
+
+        var app = angular.module('MyApp', [])
+
+        app.controller('MyController', function ($scope, $http, $window) {
+
+            $scope.IsVisible = false;
+
+            $scope.Search = function () {
+
+                var customer = '{Name: "' + $scope.Prefix + '" }';
+
+                var post = $http({      //Data sent to the AjaxMethod action method.
+                    method: "POST",
+                    url: "/api/AjaxAPI/AjaxMethod",
+                    dataType: 'json',
+                    data: customer,
+                    headers: { "Content-Type": "application/json" }
+                });
+
+                post.success(function (data, status) {  //Data returned from the AjaxMethod action method.
+                    $scope.Customers = data;
+                    $scope.IsVisible = true;
+                    $window.alert(status);
+                });
+
+                post.error(function (data, status) {
+                    $window.alert(data.Message);
+                });
+            }
+        });
+
+    </script>
+</head>
     <body>
-        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.9/angular.min.js"></script>
-        <script type="text/javascript">
-
-            var app = angular.module('MyApp', [])
-
-            app.controller('MyController', function ($scope, $http, $window) {
-
-                $scope.IsVisible = false;
-
-                $scope.Search = function () {
-
-                    var customer = '{Name: "' + $scope.Prefix + '" }';
-
-                    var post = $http({
-                        method: "POST",
-                        url: "/api/AjaxAPI/AjaxMethod",
-                        dataType: 'json',
-                        data: customer,
-                        headers: { "Content-Type": "application/json" }
-                    });
-
-                    post.success(function (data, status) {
-                        $scope.Customers = data;
-                        $scope.IsVisible = true;
-                    });
-
-                    post.error(function (data, status) {
-                        $window.alert(data.Message);
-                    });
-                }
-            });
-
-        </script>
+        
         <div ng-app="MyApp" ng-controller="MyController">
 
             Name:

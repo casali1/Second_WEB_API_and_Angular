@@ -1,10 +1,8 @@
-﻿
-@{
+﻿@{
     Layout = null;
 }
 
 <!DOCTYPE html>
-
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
@@ -21,17 +19,17 @@
 
             $scope.Search = function () {
             
-                var customer = {"Name": $scope.Prefix };
+                var customer = {"Name": $scope.Prefix };  //This variable is a search variable that goes to the controller.
 
-                var post = $http({      //Data sent to the AjaxMethod action method.
-                    method: "POST",
-                    url: "/api/AjaxAPI/AjaxMethod",
+                var post = $http({      //Data sent to the AjaxMethod action method.  This is the input to the controller.
+                    method: "POST",                                           //This is a POST operation.
+                    url: "/api/AjaxAPI/AjaxMethod",                           //This URL is the end point of the controller that we are hitting.
                     dataType: 'json',
-                    data: customer,
+                    data: customer,                                           //This variable is a search variable that goes to the controller.
                     headers: { "Content-Type": "application/json" }
                 });
 
-                post.success(function (data, status) {  //Data returned from the AjaxMethod action method.
+                post.success(function (data, status) {  //Data returned from the AjaxMethod action method.  And this is the output from the controller.
                     $scope.Customers = data;
                     $scope.IsVisible = true;
                     $window.alert(status);
@@ -45,8 +43,7 @@
 
     </script>
 </head>
-    <body>
-        
+    <body>       
         <div ng-app="MyApp" ng-controller="MyController">
 
             Name:
